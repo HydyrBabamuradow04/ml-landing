@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="ru" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ML Community Uzbekistan | Курс ML Engineer</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        mlDark: '#05070C',
+                        mlCard: '#0F131E',
+                        mlCardHover: '#151B2A',
+                        mlPurple: '#7C3AED',
+                        mlCyan: '#06B6D4'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .glow-border {
+            position: relative;
+        }
+        .glow-border::after {
+            content: ''; position: absolute; inset: 0; border-radius: 1rem;
+            padding: 1px; background: linear-gradient(to bottom right, rgba(124,58,237,0.4), rgba(6,182,212,0.1));
+            -webkit-mask: linear-gradient(#fff #fff) content-box, linear-gradient(#fff #fff);
+            -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none;
+        }
+        .text-gradient {
+            background: linear-gradient(135deg, #A78BFA 0%, #22D3EE 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+<body class="bg-mlDark text-gray-200 antialiased selection:bg-mlPurple/30 selection:text-white">
+
+    <!-- Навигация -->
+    <nav class="border-b border-gray-900 bg-mlDark/70 backdrop-blur-xl sticky top-0 z-50 transition-all">
+        <div class="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="h-9 w-9 rounded-xl bg-gradient-to-tr from-mlPurple to-mlCyan flex items-center justify-center font-bold text-white shadow-lg shadow-mlPurple/20">M</div>
+                <div class="flex flex-col">
+                    <span class="text-base font-bold text-white tracking-tight leading-none">ML Community</span>
+                    <span class="text-[10px] text-gray-500 font-medium tracking-wider uppercase mt-1">Uzbekistan</span>
+                </div>
+            </div>
+            <div class="hidden md:flex items-center space-x-8 text-sm font-medium text-gray-400">
+                <a href="#about" class="hover:text-white transition">О программе</a>
+                <a href="#curriculum" class="hover:text-white transition">Программа</a>
+                <a href="#mentors" class="hover:text-white transition">Менторы</a>
+            </div>
+            <a href="#register" class="bg-gradient-to-r from-mlPurple to-indigo-600 hover:opacity-90 text-white px-5 py-2.5 rounded-xl text-xs font-semibold tracking-wide shadow-md shadow-mlPurple/10 transition-all">
+                Подать заявку
+            </a>
+        </div>
+    </nav>
+
+    <!-- Hero Секция -->
+    <section class="relative pt-24 pb-20 md:pt-36 md:pb-32 overflow-hidden">
+        <div class="absolute top-0 left-1/4 w-[600px] h-[600px] bg-mlPurple/10 rounded-full blur-[150px] pointer-events-none"></div>
+        <div class="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-mlCyan/5 rounded-full blur-[130px] pointer-events-none"></div>
+
+        <div class="max-w-5xl mx-auto px-6 text-center relative z-10">
+            <div class="inline-flex items-center space-x-2 bg-gray-900/60 border border-gray-800/80 px-4 py-1.5 rounded-full text-xs font-medium text-gray-400 mb-8 backdrop-blur-sm">
+                <span class="w-2 h-2 rounded-full bg-mlCyan animate-pulse"></span>
+                <span>Набор на специализацию: Весна-Лето 2026</span>
+            </div>
+            <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight text-white mb-8 leading-[1.15]">
+                Профессиональный трек <br><span class="text-gradient">Machine Learning Engineer</span>
+            </h1>
+            <p class="text-gray-400 text-base sm:text-lg max-w-2xl mx-auto mb-12 leading-relaxed">
+                Перейдите от базового программирования к проектированию, оптимизации и развертыванию высоконагруженных систем искусственного интеллекта. Курс разработан совместно со специалистами сообщества.
+            </p>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4 max-w-sm mx-auto">
+                <a href="#register" class="w-full bg-white text-mlDark font-bold px-6 py-3.5 rounded-xl hover:bg-gray-100 transition shadow-lg shadow-white/5 text-center text-sm">
+                    Зарегистрироваться
+                </a>
+                <a href="#curriculum" class="w-full bg-mlCard border border-gray-800/80 text-gray-300 font-semibold px-6 py-3.5 rounded-xl hover:bg-mlCardHover transition text-center text-sm">
+                    Смотреть программу
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Ключевые показатели -->
+    <section class="max-w-6xl mx-auto px-6 mb-24">
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 p-8 rounded-2xl bg-mlCard/40 border border-gray-900/60 backdrop-blur-sm">
+            <div class="p-4">
+                <div class="text-xs text-gray-500 font-semibold uppercase tracking-wider mb-1">Среда</div>
+                <div class="text-xl font-bold text-white">3.5k+ Участников</div>
+            </div>
+            <div class="p-4 border-l border-gray-900">
+                <div class="text-xs text-gray-500 font-semibold uppercase tracking-wider mb-1">Качество</div>
+                <div class="text-xl font-bold text-white">01AI Стандарт</div>
+            </div>
+            <div class="p-4 border-l border-gray-900">
+                <div class="text-xs text-gray-500 font-semibold uppercase tracking-wider mb-1">Практика</div>
+                <div class="text-xl font-bold text-white">5+ Реальных Проектов</div>
+            </div>
+            <div class="p-4 border-l border-gray-900">
+                <div class="text-xs text-gray-500 font-semibold uppercase tracking-wider mb-1">Итог</div>
+                <div class="text-xl font-bold text-mlCyan">Сквозной AI Агент</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- О Программе -->
+    <section id="about" class="py-12 max-w-6xl mx-auto px-6 mb-24">
+        <div class="grid lg:grid-cols-12 gap-12 items-center">
+            <div class="lg:col-span-5 space-y-6">
+                <div class="text-xs font-bold tracking-widest text-mlPurple uppercase">Архитектура курса</div>
+                <h2 class="text-3xl font-bold text-white tracking-tight">Почему это не просто очередной онлайн-курс</h2>
+                <p class="text-gray-400 leading-relaxed text-sm sm:text-base">
+                    Мы готовим инженеров, способных решать реальные бизнес-задачи. Курс убирает разрыв между теоретическими моделями из блокнотов (Jupyter) и продакшн-системами, которые приносят пользу индустрии.
+                </p>
+            </div>
+            <div class="lg:col-span-7 grid sm:grid-cols-2 gap-4">
+                <div class="p-6 rounded-2xl bg-mlCard border border-gray-900/80">
+                    <div class="h-8 w-8 rounded-lg bg-mlPurple/10 flex items-center justify-center text-mlPurple mb-4">✓</div>
+                    <h4 class="text-white font-bold text-base mb-2">Production-Ready</h4>
+                    <p class="text-gray-500 text-xs leading-relaxed">Вы научитесь упаковывать модели в Docker, писать API на FastAPI и настраивать мониторинг.</p>
+                </div>
+                <div class="p-6 rounded-2xl bg-mlCard border border-gray-900/80">
+                    <div class="h-8 w-8 rounded-lg bg-mlCyan/10 flex items-center justify-center text-mlCyan mb-4">✓</div>
+                    <h4 class="text-white font-bold text-base mb-2">Глубокий стек LLM</h4>
+                    <p class="text-gray-500 text-xs leading-relaxed">Проектирование мультимодальных систем ИИ, интеграция современных LLM (DeepSeek, Gemini) и построение RAG систем.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Программа Обучения -->
+    <section id="curriculum" class="py-12 max-w-5xl mx-auto px-6 mb-24">
+        <div class="text-center max-w-xl mx-auto mb-16">
+            <h2 class="text-3xl font-bold text-white mb-4">Программа специализации</h2>
+            <p class="text-gray-500 text-sm">Пошаговый трек развития от инженеров ML Community</p>
+        </div>
+
+        <div class="space-y-4">
+            <div class="p-6 rounded-2xl bg-mlCard border border-gray-900/80 glow-border">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                    <div class="space-y-1">
+                        <span class="text-[10px] text-mlPurple font-bold tracking-widest uppercase">Модуль 01</span>
+                        <h3 class="text-lg font-bold text-white">Data Engineering & Classical ML</h3>
+                        <p class="text-gray-400 text-xs max-w-2xl">Разведочный анализ (EDA), предобработка данных, продвинутое владение Scikit-Learn. Алгоритмы ансамблирования: Random Forest, Gradient Boosting.</p>
+                    </div>
+                    <span class="text-xs bg-gray-900 text-gray-400 px-3 py-1 rounded-full border border-gray-800 self-start md:self-center">3 недели</span>
+                </div>
+            </div>
+            <div class="p-6 rounded-2xl bg-mlCard border border-gray-900/80 glow-border">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                    <div class="space-y-1">
+                        <span class="text-[10px] text-mlCyan font-bold tracking-widest uppercase">Модуль 02</span>
+                        <h3 class="text-lg font-bold text-white">Deep Learning Frameworks</h3>
+                        <p class="text-gray-400 text-xs max-w-2xl">Погружение в PyTorch. Архитектуры сверточных (CNN) и рекуррентных сетей. Введение в механизмы внимания (Attention) и трансформеры.</p>
+                    </div>
+                    <span class="text-xs bg-gray-900 text-gray-400 px-3 py-1 rounded-full border border-gray-800 self-start md:self-center">4 недели</span>
+                </div>
+            </div>
+            <div class="p-6 rounded-2xl bg-mlCard border border-gray-900/80 glow-border">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                    <div class="space-y-1">
+                        <span class="text-[10px] text-mlPurple font-bold tracking-widest uppercase">Модуль 03</span>
+                        <h3 class="text-lg font-bold text-white">LLM Архитектура & Практика AI Агентов</h3>
+                        <p class="text-gray-400 text-xs max-w-2xl">Разработка мультимодальных агентов (обработка видео, аудио, кода). Оптимизация промптов, интеграция с базами данных и построение интерфейсов на Streamlit.</p>
+                    </div>
+                    <span class="text-xs bg-gray-900 text-gray-400 px-3 py-1 rounded-full border border-gray-800 self-start md:self-center">3 недели</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Команда и Менторы -->
+    <section id="mentors" class="py-12 max-w-6xl mx-auto px-6 mb-24">
+        <div class="text-center max-w-xl mx-auto mb-16">
+            <h2 class="text-3xl font-bold text-white mb-4">Наставники курса</h2>
+            <p class="text-gray-500 text-sm">Действующие инженеры, которые будут проверять ваш код и курировать проекты</p>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-6">
+            <div class="p-8 rounded-2xl bg-gradient-to-br from-mlCard to-gray-950 border border-gray-900 flex flex-col sm:flex-row gap-6 items-start">
+                <div class="h-20 w-20 rounded-2xl bg-mlPurple/10 border border-mlPurple/20 flex items-center justify-center font-bold text-2xl text-mlPurple flex-shrink-0">S</div>
+                <div class="space-y-3">
+                    <div class="inline-block text-[10px] bg-mlPurple/10 text-mlPurple px-2.5 py-0.5 rounded-md font-bold uppercase tracking-wider">Lead Mentor</div>
+                    <h3 class="text-xl font-bold text-white">Shaxriyor</h3>
+                    <p class="text-xs text-gray-400 font-medium leading-none">Lead AI / ML Engineer & Основатель ML Community</p>
+                    <p class="text-gray-500 text-xs leading-relaxed">
+                        Идеолог и руководитель сообщества ML Community Uzbekistan. Эксперт в области проектирования архитектур больших языковых моделей и внедрения AI-решений в масштабные коммерческие продукты экосистемы.
+                    </p>
+                </div>
+            </div>
+
+            <div class="p-8 rounded-2xl bg-gradient-to-br from-mlCard to-gray-950 border border-gray-900 flex flex-col sm:flex-row gap-6 items-start">
+                <div class="h-20 w-20 rounded-2xl bg-mlCyan/10 border border-mlCyan/20 flex items-center justify-center font-bold text-2xl text-mlCyan flex-shrink-0">HB</div>
+                <div class="space-y-3">
+                    <div class="inline-block text-[10px] bg-mlCyan/10 text-mlCyan px-2.5 py-0.5 rounded-md font-bold uppercase tracking-wider">AI Engineer & Tutor</div>
+                    <h3 class="text-xl font-bold text-white">Хыдыр Бабамурадов</h3>
+                    <p class="text-xs text-gray-400 font-medium leading-none">Machine Learning Engineer Intern</p>
+                    <p class="text-gray-500 text-xs leading-relaxed">
+                        Специалист по разработке интеллектуальных систем оценки и мультимодальных ИИ-агентов для образовательных технологий (EdTech). Организатор воркшопов сообщества и технический лидер проектов.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Форма Регистрации -->
+    <section id="register" class="py-20 border-t border-gray-900 bg-gradient-to-b from-mlDark to-black">
+        <div class="max-w-md mx-auto px-6">
+            <div class="text-center mb-10">
+                <h2 class="text-3xl font-extrabold text-white mb-3 tracking-tight">Подать заявку</h2>
+                <p class="text-xs text-gray-500 leading-relaxed">После отправки формы кураторы свяжутся с вами в Telegram для подтверждения регистрации.</p>
+            </div>
+            
+            <form action="https://api.web3forms.com/submit" method="POST" class="space-y-5 bg-mlCard border border-gray-900 p-8 rounded-2xl shadow-2xl relative z-10">
+                <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE">
+                <input type="hidden" name="subject" value="Новая заявка на курс ML Engineer">
+                
+                <div>
+                    <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">ФИО студента</label>
+                    <input type="text" name="name" placeholder="Иван Иванов" class="w-full bg-mlDark border border-gray-800 focus:border-mlPurple rounded-xl px-4 py-3.5 text-sm text-white placeholder-gray-700 focus:outline-none transition-all" required>
+                </div>
+                <div>
+                    <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">Контакты в Telegram</label>
+                    <input type="text" name="telegram" placeholder="@username" class="w-full bg-mlDark border border-gray-800 focus:border-mlPurple rounded-xl px-4 py-3.5 text-sm text-white placeholder-gray-700 focus:outline-none transition-all" required>
+                </div>
+                <div>
+                    <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">Номер телефона</label>
+                    <input type="tel" id="phone_number" name="phone" placeholder="+998 (90) 123-45-67" class="w-full bg-mlDark border border-gray-800 focus:border-mlPurple rounded-xl px-4 py-3.5 text-sm text-white placeholder-gray-700 focus:outline-none transition-all" required>
+                </div>
+                <div>
+                    <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">Опыт в коде</label>
+                    <select name="experience" class="w-full bg-mlDark border border-gray-800 focus:border-mlPurple rounded-xl px-4 py-3.5 text-sm text-gray-400 focus:outline-none transition-all">
+                        <option>Знаю базу Python (функции, циклы)</option>
+                        <option>Абсолютный новичок (хочу освоить)</option>
+                        <option>Уже работаю разработчиком / Data Analyst</option>
+                    </select>
+                </div>
+                
+                <button type="submit" class="w-full bg-gradient-to-r from-mlPurple to-indigo-600 hover:opacity-95 text-white font-bold py-4 rounded-xl text-sm transition shadow-lg shadow-mlPurple/10">
+                    Отправить заявку
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Футер -->
+    <footer class="border-t border-gray-950 bg-black py-12 text-center text-xs text-gray-600">
+        <div class="max-w-6xl mx-auto px-6 space-y-4">
+            <div class="flex justify-center space-x-8 text-xs font-semibold text-gray-400">
+                <a href="https://t.me/mlc_uz" target="_blank" class="hover:text-mlPurple transition">Telegram-Канал</a>
+                <a href="https://mlcommunity.uz" target="_blank" class="hover:text-mlCyan transition">MLCommunity.uz</a>
+                <a href="mailto:info@mlcommunity.uz" class="hover:text-white transition">info@mlcommunity.uz</a>
+            </div>
+            <p class="text-[11px]">&copy; 2026 ML Community Uzbekistan. Защищено стандартами качества 01AI.</p>
+        </div>
+    </footer>
+
+    <script>
+        const pInput = document.getElementById('phone_number');
+        pInput.addEventListener('input', function (e) {
+            let val = e.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,2})(\d{0,3})(\d{0,2})(\d{0,2})/);
+            if (!val[2] && val[1] !== '998') {
+                e.target.value = '+998 (';
+                return;
+            }
+            e.target.value = !val[2] ? '+998 (' + val[1] : '+998 (' + val[2] + (val[3] ? ') ' + val[3] : '') + (val[4] ? '-' + val[4] : '') + (val[5] ? '-' + val[5] : '');
+        });
+    </script>
+</body>
+</html>
