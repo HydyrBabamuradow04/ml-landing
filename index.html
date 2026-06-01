@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="ru" class="scroll-smooth">
+<html lang="uz" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ML Community Uzbekistan | Курс ML Engineer</title>
+    <title>ML Community Uzbekistan | GenAI Marafon</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -11,9 +11,10 @@
             theme: {
                 extend: {
                     colors: {
-                        mlDark: '#05070C',
-                        mlCard: '#0F131E',
-                        mlCardHover: '#151B2A',
+                        mlDark: '#000000',
+                        mlNavBg: '#1b1230',
+                        mlCard: '#150e26',
+                        mlCardBorder: 'rgba(124, 58, 237, 0.2)',
                         mlPurple: '#7C3AED',
                         mlCyan: '#06B6D4'
                     }
@@ -24,254 +25,424 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght=400;500;600;700;800&display=swap');
         body { font-family: 'Plus Jakarta Sans', sans-serif; }
-        .glow-border {
-            position: relative;
+        
+        .bg-grid-glow {
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(124, 58, 237, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 0% 100%, rgba(6, 182, 212, 0.03) 0%, transparent 40%);
         }
-        .glow-border::after {
-            content: ''; position: absolute; inset: 0; border-radius: 1rem;
-            padding: 1px; background: linear-gradient(to bottom right, rgba(124,58,237,0.4), rgba(6,182,212,0.1));
-            -webkit-mask: linear-gradient(#fff #fff) content-box, linear-gradient(#fff #fff);
-            -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none;
-        }
+        
         .text-gradient {
-            background: linear-gradient(135deg, #A78BFA 0%, #22D3EE 100%);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background: linear-gradient(135deg, #FFF 30%, #A78BFA 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .neon-glow-btn {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        .neon-glow-btn:hover {
+            box-shadow: 0 0 25px rgba(124, 58, 237, 0.4);
+            transform: translateY(-1px);
         }
     </style>
 </head>
-<body class="bg-mlDark text-gray-200 antialiased selection:bg-mlPurple/30 selection:text-white">
+<body class="bg-mlDark text-gray-300 antialiased selection:bg-mlPurple/30 selection:text-white bg-grid-glow min-h-screen">
 
-    <!-- Навигация -->
-    <nav class="border-b border-gray-900 bg-mlDark/70 backdrop-blur-xl sticky top-0 z-50 transition-all">
-        <div class="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
-            <div class="flex items-center space-x-3">
-                <div class="h-9 w-9 rounded-xl bg-gradient-to-tr from-mlPurple to-mlCyan flex items-center justify-center font-bold text-white shadow-lg shadow-mlPurple/20">M</div>
+    <!-- Навигация / Navigation Tab -->
+    <nav class="border-b border-white/10 bg-mlNavBg/95 backdrop-blur-md sticky top-0 z-50 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            
+            <!-- 0 | I Logo Branding Component -->
+            <div class="flex items-center space-x-3.5 select-none">
+                <div class="flex items-center justify-center border border-white/80 px-2 py-0.5 font-mono text-xs font-bold tracking-widest text-white rounded-sm bg-black/40">
+                    0&nbsp;|&nbsp;I
+                </div>
                 <div class="flex flex-col">
-                    <span class="text-base font-bold text-white tracking-tight leading-none">ML Community</span>
-                    <span class="text-[10px] text-gray-500 font-medium tracking-wider uppercase mt-1">Uzbekistan</span>
+                    <span class="text-[11px] font-extrabold tracking-wider text-white uppercase leading-none">Machine Learning</span>
+                    <span class="text-[10px] font-semibold tracking-widest text-white/60 uppercase mt-1 leading-none">Community Uzbekistan</span>
                 </div>
             </div>
-            <div class="hidden md:flex items-center space-x-8 text-sm font-medium text-gray-400">
-                <a href="#about" class="hover:text-white transition">О программе</a>
-                <a href="#curriculum" class="hover:text-white transition">Программа</a>
-                <a href="#mentors" class="hover:text-white transition">Менторы</a>
+
+            <!-- Main Menu Links -->
+            <div class="hidden md:flex items-center space-x-8 text-[12px] font-medium tracking-wide text-gray-400">
+                <a href="#about" id="nav-about" class="hover:text-white transition-colors duration-200">Biz haqimizda</a>
+                <a href="#audience" id="nav-audience" class="hover:text-white transition-colors duration-200">Kimlar uchun</a>
+                <a href="#curriculum" id="nav-curriculum" class="hover:text-white transition-colors duration-200">Dastur marafon</a>
+                <a href="#leader" id="nav-leader" class="hover:text-white transition-colors duration-200">Rahbariyat</a>
             </div>
-            <a href="#register" class="bg-gradient-to-r from-mlPurple to-indigo-600 hover:opacity-90 text-white px-5 py-2.5 rounded-xl text-xs font-semibold tracking-wide shadow-md shadow-mlPurple/10 transition-all">
-                Подать заявку
-            </a>
+
+            <!-- Language Controls Switcher Layout -->
+            <div class="flex items-center border border-white/10 bg-black/40 p-1 rounded-xl text-xs font-bold space-x-1">
+                <button onclick="changeLanguage('uz')" id="lang-uz" class="px-2.5 py-1 rounded-lg text-white bg-mlPurple transition-all">UZ</button>
+                <button onclick="changeLanguage('ru')" id="lang-ru" class="px-2.5 py-1 rounded-lg text-gray-400 hover:text-white transition-all">RU</button>
+                <button onclick="changeLanguage('en')" id="lang-en" class="px-2.5 py-1 rounded-lg text-gray-400 hover:text-white transition-all">EN</button>
+            </div>
         </div>
     </nav>
 
-    <!-- Hero Секция -->
+    <!-- Hero Секция / Hero Section -->
     <section class="relative pt-24 pb-20 md:pt-36 md:pb-32 overflow-hidden">
-        <div class="absolute top-0 left-1/4 w-[600px] h-[600px] bg-mlPurple/10 rounded-full blur-[150px] pointer-events-none"></div>
-        <div class="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-mlCyan/5 rounded-full blur-[130px] pointer-events-none"></div>
-
-        <div class="max-w-5xl mx-auto px-6 text-center relative z-10">
-            <div class="inline-flex items-center space-x-2 bg-gray-900/60 border border-gray-800/80 px-4 py-1.5 rounded-full text-xs font-medium text-gray-400 mb-8 backdrop-blur-sm">
-                <span class="w-2 h-2 rounded-full bg-mlCyan animate-pulse"></span>
-                <span>Набор на специализацию: Весна-Лето 2026</span>
+        <div class="max-w-4xl mx-auto px-6 text-center relative z-10">
+            <div id="hero-badge" class="inline-flex items-center space-x-2 border border-white/5 bg-white/[0.02] px-4 py-1.5 rounded-full text-[10px] font-semibold tracking-widest text-gray-400 mb-8 uppercase">
+                <span class="w-1.5 h-1.5 rounded-full bg-mlPurple shadow-[0_0_10px_#7C3AED]"></span>
+                <span>GenAI Professional Trening Tizimi</span>
             </div>
-            <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight text-white mb-8 leading-[1.15]">
-                Профессиональный трек <br><span class="text-gradient">Machine Learning Engineer</span>
+            <h1 class="text-4xl sm:text-6xl font-black tracking-tight text-white mb-6 leading-[1.12]">
+                14-Kunlik Marafon <br><span class="text-gradient">GenAI Content Creation</span>
             </h1>
-            <p class="text-gray-400 text-base sm:text-lg max-w-2xl mx-auto mb-12 leading-relaxed">
-                Перейдите от базового программирования к проектированию, оптимизации и развертыванию высоконагруженных систем искусственного интеллекта. Курс разработан совместно со специалистами сообщества.
+            <p id="hero-desc" class="text-gray-400 text-sm sm:text-base max-w-2xl mx-auto mb-12 leading-relaxed font-light">
+                Kuniga 2 soat intensiv amaliyot tizimi orqali sun'iy intellekt vositalarida professional vizual, matnli va unikal video kontentlarni noldan mukammal darajagacha o'rganing.
             </p>
             <div class="flex flex-col sm:flex-row items-center justify-center gap-4 max-w-sm mx-auto">
-                <a href="#register" class="w-full bg-white text-mlDark font-bold px-6 py-3.5 rounded-xl hover:bg-gray-100 transition shadow-lg shadow-white/5 text-center text-sm">
-                    Зарегистрироваться
+                <a href="#register" id="hero-btn-main" class="w-full bg-mlPurple text-white font-bold px-6 py-4 rounded-xl text-center text-xs uppercase tracking-widest neon-glow-btn">
+                    Ishtirok etish
                 </a>
-                <a href="#curriculum" class="w-full bg-mlCard border border-gray-800/80 text-gray-300 font-semibold px-6 py-3.5 rounded-xl hover:bg-mlCardHover transition text-center text-sm">
-                    Смотреть программу
+                <a href="#curriculum" id="hero-btn-sub" class="w-full border border-white/10 bg-white/[0.02] text-gray-300 font-semibold px-6 py-4 rounded-xl hover:bg-white/5 transition text-center text-xs uppercase tracking-widest">
+                    O'quv dasturi
                 </a>
             </div>
         </div>
     </section>
 
-    <!-- Ключевые показатели -->
-    <section class="max-w-6xl mx-auto px-6 mb-24">
-        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 p-8 rounded-2xl bg-mlCard/40 border border-gray-900/60 backdrop-blur-sm">
-            <div class="p-4">
-                <div class="text-xs text-gray-500 font-semibold uppercase tracking-wider mb-1">Среда</div>
-                <div class="text-xl font-bold text-white">3.5k+ Участников</div>
+    <!-- Kurs Ko'rsatkichlari / Metric Blocks -->
+    <section class="max-w-6xl mx-auto px-6 mb-28">
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+            <div class="p-6 rounded-2xl border border-mlCardBorder bg-mlCard backdrop-blur-md shadow-lg">
+                <div class="text-2xl font-bold text-white tracking-tight">14 Kun</div>
+                <div id="metric-duration" class="text-[11px] text-gray-400 font-medium uppercase tracking-wider mt-1">Davomiyligi</div>
             </div>
-            <div class="p-4 border-l border-gray-900">
-                <div class="text-xs text-gray-500 font-semibold uppercase tracking-wider mb-1">Качество</div>
-                <div class="text-xl font-bold text-white">01AI Стандарт</div>
+            <div class="p-6 rounded-2xl border border-mlCardBorder bg-mlCard backdrop-blur-md shadow-lg">
+                <div class="text-2xl font-bold text-white tracking-tight">80% / 20%</div>
+                <div id="metric-ratio" class="text-[11px] text-gray-400 font-medium uppercase tracking-wider mt-1">Amaliyot va Nazariya</div>
             </div>
-            <div class="p-4 border-l border-gray-900">
-                <div class="text-xs text-gray-500 font-semibold uppercase tracking-wider mb-1">Практика</div>
-                <div class="text-xl font-bold text-white">5+ Реальных Проектов</div>
+            <div class="p-6 rounded-2xl border border-mlCardBorder bg-mlCard backdrop-blur-md shadow-lg">
+                <div class="text-2xl font-bold text-white tracking-tight">2 Bosqich</div>
+                <div id="metric-certs" class="text-[11px] text-gray-400 font-medium uppercase tracking-wider mt-1">Sertifikatlash</div>
             </div>
-            <div class="p-4 border-l border-gray-900">
-                <div class="text-xs text-gray-500 font-semibold uppercase tracking-wider mb-1">Итог</div>
-                <div class="text-xl font-bold text-mlCyan">Сквозной AI Агент</div>
+            <div class="p-6 rounded-2xl border border-mlCardBorder bg-mlCard backdrop-blur-md shadow-lg">
+                <div class="text-2xl font-bold text-white tracking-tight">2 Soat</div>
+                <div id="metric-hours" class="text-[11px] text-gray-400 font-medium uppercase tracking-wider mt-1">Kunlik dars</div>
             </div>
         </div>
     </section>
 
-    <!-- О Программе -->
-    <section id="about" class="py-12 max-w-6xl mx-auto px-6 mb-24">
+    <!-- Biz Haqimizda / About Section -->
+    <section id="about" class="py-12 max-w-6xl mx-auto px-6 mb-28">
         <div class="grid lg:grid-cols-12 gap-12 items-center">
-            <div class="lg:col-span-5 space-y-6">
-                <div class="text-xs font-bold tracking-widest text-mlPurple uppercase">Архитектура курса</div>
-                <h2 class="text-3xl font-bold text-white tracking-tight">Почему это не просто очередной онлайн-курс</h2>
-                <p class="text-gray-400 leading-relaxed text-sm sm:text-base">
-                    Мы готовим инженеров, способных решать реальные бизнес-задачи. Курс убирает разрыв между теоретическими моделями из блокнотов (Jupyter) и продакшн-системами, которые приносят пользу индустрии.
+            <div class="lg:col-span-5 space-y-6 p-6 rounded-2xl border border-mlCardBorder bg-mlCard shadow-xl">
+                <div id="about-badge" class="text-[10px] font-bold tracking-widest text-mlPurple uppercase">Platforma Maqsadi</div>
+                <h2 id="about-title" class="text-2xl font-bold text-white tracking-tight">ML Community Uzbekistan loyihasi</h2>
+                <p id="about-desc" class="text-gray-400 leading-relaxed text-xs font-light">
+                    ML Community Uzbekistan — mamlakatimizdagi yetakchi sun'iy intellekt muhandislari va mutaxassislarini birlashtirgan guruhdir. Biz zamonaviy AI, Machine Learning va Generativ AI (GenAI) texnologiyalarini o'rganishni istagan yoshlar hamda tadbirkorlar uchun eng ilg'or xalqaro tizimlarni taqdim etamiz.
                 </p>
             </div>
             <div class="lg:col-span-7 grid sm:grid-cols-2 gap-4">
-                <div class="p-6 rounded-2xl bg-mlCard border border-gray-900/80">
-                    <div class="h-8 w-8 rounded-lg bg-mlPurple/10 flex items-center justify-center text-mlPurple mb-4">✓</div>
-                    <h4 class="text-white font-bold text-base mb-2">Production-Ready</h4>
-                    <p class="text-gray-500 text-xs leading-relaxed">Вы научитесь упаковывать модели в Docker, писать API на FastAPI и настраивать мониторинг.</p>
+                <div class="p-6 rounded-2xl border border-mlCardBorder bg-mlCard backdrop-blur-sm transition-all duration-300 hover:border-white/20 shadow-xl">
+                    <div class="text-mlPurple text-lg font-bold mb-2">01</div>
+                    <h4 id="feature-1-title" class="text-white font-bold text-sm mb-1.5">"Tezkor g'alaba" tamoyili</h4>
+                    <p id="feature-1-desc" class="text-gray-400 text-xs leading-relaxed font-light">Birinchi 7 kun ichida darhol vizual natija beruvchi generativ tizimlar bilan ishlab, ko'nikmalarni tez shakllantiramiz.</p>
                 </div>
-                <div class="p-6 rounded-2xl bg-mlCard border border-gray-900/80">
-                    <div class="h-8 w-8 rounded-lg bg-mlCyan/10 flex items-center justify-center text-mlCyan mb-4">✓</div>
-                    <h4 class="text-white font-bold text-base mb-2">Глубокий стек LLM</h4>
-                    <p class="text-gray-500 text-xs leading-relaxed">Проектирование мультимодальных систем ИИ, интеграция современных LLM (DeepSeek, Gemini) и построение RAG систем.</p>
+                <div class="p-6 rounded-2xl border border-mlCardBorder bg-mlCard backdrop-blur-sm transition-all duration-300 hover:border-white/20 shadow-xl">
+                    <div class="text-mlCyan text-lg font-bold mb-2">02</div>
+                    <h4 id="feature-2-title" class="text-white font-bold text-sm mb-1.5">Tizimli avtomatlashtirish</h4>
+                    <p id="feature-2-desc" class="text-gray-400 text-xs leading-relaxed font-light">Ikkinchi haftadan boshlab murakkab multimedia skriptlari, raqamli sun'iy avatarlar hamda biznes integratsiyalariga o'tamiz.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Программа Обучения -->
-    <section id="curriculum" class="py-12 max-w-5xl mx-auto px-6 mb-24">
+    <!-- Kimlar Uchun / Target Audience -->
+    <section id="audience" class="py-12 max-w-6xl mx-auto px-6 mb-28">
         <div class="text-center max-w-xl mx-auto mb-16">
-            <h2 class="text-3xl font-bold text-white mb-4">Программа специализации</h2>
-            <p class="text-gray-500 text-sm">Пошаговый трек развития от инженеров ML Community</p>
+            <h2 id="aud-title" class="text-3xl font-bold text-white mb-3 tracking-tight">Marafon kimlar uchun mo'ljallangan?</h2>
+            <p id="aud-desc" class="text-gray-500 text-xs font-light">Sun'iy intellekt imkoniyatlaridan foydalangan holda o'z sohasida yetakchi bo'lmoqchi bo'lganlar uchun.</p>
         </div>
 
-        <div class="space-y-4">
-            <div class="p-6 rounded-2xl bg-mlCard border border-gray-900/80 glow-border">
-                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                    <div class="space-y-1">
-                        <span class="text-[10px] text-mlPurple font-bold tracking-widest uppercase">Модуль 01</span>
-                        <h3 class="text-lg font-bold text-white">Data Engineering & Classical ML</h3>
-                        <p class="text-gray-400 text-xs max-w-2xl">Разведочный анализ (EDA), предобработка данных, продвинутое владение Scikit-Learn. Алгоритмы ансамблирования: Random Forest, Gradient Boosting.</p>
-                    </div>
-                    <span class="text-xs bg-gray-900 text-gray-400 px-3 py-1 rounded-full border border-gray-800 self-start md:self-center">3 недели</span>
-                </div>
+        <div class="grid md:grid-cols-3 gap-6">
+            <div id="card-aud-1" class="p-6 rounded-2xl border border-mlCardBorder bg-mlCard shadow-lg space-y-4">
+                <!-- Loaded dynamically by JavaScript -->
             </div>
-            <div class="p-6 rounded-2xl bg-mlCard border border-gray-900/80 glow-border">
-                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                    <div class="space-y-1">
-                        <span class="text-[10px] text-mlCyan font-bold tracking-widest uppercase">Модуль 02</span>
-                        <h3 class="text-lg font-bold text-white">Deep Learning Frameworks</h3>
-                        <p class="text-gray-400 text-xs max-w-2xl">Погружение в PyTorch. Архитектуры сверточных (CNN) и рекуррентных сетей. Введение в механизмы внимания (Attention) и трансформеры.</p>
-                    </div>
-                    <span class="text-xs bg-gray-900 text-gray-400 px-3 py-1 rounded-full border border-gray-800 self-start md:self-center">4 недели</span>
-                </div>
+            <div id="card-aud-2" class="p-6 rounded-2xl border border-mlCardBorder bg-mlCard shadow-lg space-y-4">
+                <!-- Loaded dynamically by JavaScript -->
             </div>
-            <div class="p-6 rounded-2xl bg-mlCard border border-gray-900/80 glow-border">
-                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                    <div class="space-y-1">
-                        <span class="text-[10px] text-mlPurple font-bold tracking-widest uppercase">Модуль 03</span>
-                        <h3 class="text-lg font-bold text-white">LLM Архитектура & Практика AI Агентов</h3>
-                        <p class="text-gray-400 text-xs max-w-2xl">Разработка мультимодальных агентов (обработка видео, аудио, кода). Оптимизация промптов, интеграция с базами данных и построение интерфейсов на Streamlit.</p>
-                    </div>
-                    <span class="text-xs bg-gray-900 text-gray-400 px-3 py-1 rounded-full border border-gray-800 self-start md:self-center">3 недели</span>
-                </div>
+            <div id="card-aud-3" class="p-6 rounded-2xl border border-mlCardBorder bg-mlCard shadow-lg space-y-4">
+                <!-- Loaded dynamically by JavaScript -->
             </div>
         </div>
     </section>
 
-    <!-- Команда и Менторы -->
-    <section id="mentors" class="py-12 max-w-6xl mx-auto px-6 mb-24">
+    <!-- Kurs Dasturi / Syllabus -->
+    <section id="curriculum" class="py-12 max-w-5xl mx-auto px-6 mb-28">
         <div class="text-center max-w-xl mx-auto mb-16">
-            <h2 class="text-3xl font-bold text-white mb-4">Наставники курса</h2>
-            <p class="text-gray-500 text-sm">Действующие инженеры, которые будут проверять ваш код и курировать проекты</p>
+            <h2 id="cur-title" class="text-3xl font-bold text-white mb-4">Marafon O'quv Rejasi</h2>
+            <div id="cur-sub" class="inline-flex gap-4 text-[10px] font-bold uppercase tracking-widest text-gray-500 mt-2">
+                <!-- Loaded dynamically by JavaScript -->
+            </div>
         </div>
 
-        <div class="grid md:grid-cols-2 gap-6">
-            <div class="p-8 rounded-2xl bg-gradient-to-br from-mlCard to-gray-950 border border-gray-900 flex flex-col sm:flex-row gap-6 items-start">
-                <div class="h-20 w-20 rounded-2xl bg-mlPurple/10 border border-mlPurple/20 flex items-center justify-center font-bold text-2xl text-mlPurple flex-shrink-0">S</div>
-                <div class="space-y-3">
-                    <div class="inline-block text-[10px] bg-mlPurple/10 text-mlPurple px-2.5 py-0.5 rounded-md font-bold uppercase tracking-wider">Lead Mentor</div>
-                    <h3 class="text-xl font-bold text-white">Shaxriyor</h3>
-                    <p class="text-xs text-gray-400 font-medium leading-none">Lead AI / ML Engineer & Основатель ML Community</p>
-                    <p class="text-gray-500 text-xs leading-relaxed">
-                        Идеолог и руководитель сообщества ML Community Uzbekistan. Эксперт в области проектирования архитектур больших языковых моделей и внедрения AI-решений в масштабные коммерческие продукты экосистемы.
-                    </p>
-                </div>
+        <div class="grid lg:grid-cols-2 gap-8">
+            <!-- БЛОК 1 -->
+            <div class="space-y-4" id="syllabus-block-1">
+                <!-- Loaded dynamically by JavaScript -->
             </div>
 
-            <div class="p-8 rounded-2xl bg-gradient-to-br from-mlCard to-gray-950 border border-gray-900 flex flex-col sm:flex-row gap-6 items-start">
-                <div class="h-20 w-20 rounded-2xl bg-mlCyan/10 border border-mlCyan/20 flex items-center justify-center font-bold text-2xl text-mlCyan flex-shrink-0">HB</div>
-                <div class="space-y-3">
-                    <div class="inline-block text-[10px] bg-mlCyan/10 text-mlCyan px-2.5 py-0.5 rounded-md font-bold uppercase tracking-wider">AI Engineer & Tutor</div>
-                    <h3 class="text-xl font-bold text-white">Хыдыр Бабамурадов</h3>
-                    <p class="text-xs text-gray-400 font-medium leading-none">Machine Learning Engineer Intern</p>
-                    <p class="text-gray-500 text-xs leading-relaxed">
-                        Специалист по разработке интеллектуальных систем оценки и мультимодальных ИИ-агентов для образовательных технологий (EdTech). Организатор воркшопов сообщества и технический лидер проектов.
-                    </p>
-                </div>
+            <!-- БЛОК 2 -->
+            <div class="space-y-4" id="syllabus-block-2">
+                <!-- Loaded dynamically by JavaScript -->
             </div>
         </div>
     </section>
 
-    <!-- Форма Регистрации -->
-    <section id="register" class="py-20 border-t border-gray-900 bg-gradient-to-b from-mlDark to-black">
+    <!-- Rahbariyat / Leadership Card -->
+    <section id="leader" class="py-16 max-w-4xl mx-auto px-6 mb-28 border border-mlCardBorder bg-mlCard backdrop-blur-md rounded-3xl relative overflow-hidden shadow-xl">
+        <div class="flex flex-col md:flex-row items-center gap-10 relative z-10">
+            <div class="h-52 w-40 rounded-2xl overflow-hidden bg-zinc-900 border border-white/10 flex-shrink-0">
+                <img src="shakhriyor.avif" alt="Shaxriyor Xudoyberdiyev" class="w-full h-full object-cover object-top">
+            </div>
+            <div class="space-y-4 text-center md:text-left">
+                <span id="lead-badge" class="inline-block text-[9px] border border-mlPurple/40 bg-mlPurple/5 text-mlPurple px-2.5 py-1 rounded-md font-bold uppercase tracking-widest">Bosh Rahbar</span>
+                <h2 class="text-2xl font-bold text-white tracking-tight">Shaxriyor Xudoyberdiyev</h2>
+                <p id="lead-title" class="text-xs text-mlCyan font-medium uppercase tracking-wider">ML Community Uzbekistan Bosh Rahbari & Bosh AI Muhandisi</p>
+                <p id="lead-desc" class="text-gray-400 text-xs sm:text-sm leading-relaxed font-light">
+                    O'zbekistondagi eng yirik sun'iy intellekt ekotizimi va professional ML Community Uzbekistan guruhining asoschisi hamda rasmiy rahbari. Sanoat miqyosidagi yirik Machine Learning loyihalari me'mori va mamlakatda xalqaro ta'lim tizimlarini joriy etish tashabbuskori. Har bir marafon ishtirokchisining o'quv sifatini shaxsan nazorat qiladi.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Ro'yxatdan o'tish formasi / Form -->
+    <section id="register" class="py-20 border-t border-white/5 bg-gradient-to-b from-mlDark to-[#050507]">
         <div class="max-w-md mx-auto px-6">
             <div class="text-center mb-10">
-                <h2 class="text-3xl font-extrabold text-white mb-3 tracking-tight">Подать заявку</h2>
-                <p class="text-xs text-gray-500 leading-relaxed">После отправки формы кураторы свяжутся с вами в Telegram для подтверждения регистрации.</p>
+                <h2 id="form-title" class="text-2xl font-bold text-white mb-2 tracking-tight">Marafonga Arizalar Qabuli</h2>
+                <p id="form-desc" class="text-xs text-gray-500 font-light">Ma'lumotlaringizni to'ldiring. Koordinatorlarimiz guruh suhbatini belgilash uchun tez orada siz bilan Telegram orqali bog'lanishadi.</p>
             </div>
             
-            <form action="https://api.web3forms.com/submit" method="POST" class="space-y-5 bg-mlCard border border-gray-900 p-8 rounded-2xl shadow-2xl relative z-10">
-                <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE">
-                <input type="hidden" name="subject" value="Новая заявка на курс ML Engineer">
+            <form action="https://api.web3forms.com/submit" method="POST" class="space-y-5 border border-mlCardBorder bg-mlCard p-8 rounded-2xl shadow-2xl relative z-10">
+                <input type="hidden" name="access_key" value="06e1c968-5c56-45e6-88bd-415ddfe6a8f2">
+                <input type="hidden" name="subject" value="Marafonga Yangi Ariza - GenAI Content Creation">
                 
                 <div>
-                    <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">ФИО студента</label>
-                    <input type="text" name="name" placeholder="Иван Иванов" class="w-full bg-mlDark border border-gray-800 focus:border-mlPurple rounded-xl px-4 py-3.5 text-sm text-white placeholder-gray-700 focus:outline-none transition-all" required>
+                    <label id="lbl-name" class="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">To'liq ism-sharifingiz</label>
+                    <input type="text" name="name" placeholder="Ism familiya" class="w-full bg-black/40 border border-white/5 focus:border-mlPurple rounded-xl px-4 py-3.5 text-sm text-white placeholder-gray-700 focus:outline-none transition-all" required>
                 </div>
                 <div>
-                    <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">Контакты в Telegram</label>
-                    <input type="text" name="telegram" placeholder="@username" class="w-full bg-mlDark border border-gray-800 focus:border-mlPurple rounded-xl px-4 py-3.5 text-sm text-white placeholder-gray-700 focus:outline-none transition-all" required>
+                    <label id="lbl-tg" class="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">Telegram profilingiz (@username)</label>
+                    <input type="text" name="telegram" placeholder="@username" class="w-full bg-black/40 border border-white/5 focus:border-mlPurple rounded-xl px-4 py-3.5 text-sm text-white placeholder-gray-700 focus:outline-none transition-all" required>
                 </div>
                 <div>
-                    <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">Номер телефона</label>
-                    <input type="tel" id="phone_number" name="phone" placeholder="+998 (90) 123-45-67" class="w-full bg-mlDark border border-gray-800 focus:border-mlPurple rounded-xl px-4 py-3.5 text-sm text-white placeholder-gray-700 focus:outline-none transition-all" required>
+                    <label id="lbl-phone" class="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">Telefon raqamingiz</label>
+                    <input type="tel" id="uzb_phone" name="phone" placeholder="+998 (90) 123-45-67" class="w-full bg-black/40 border border-white/5 focus:border-mlPurple rounded-xl px-4 py-3.5 text-sm text-white placeholder-gray-700 focus:outline-none transition-all" required>
                 </div>
                 <div>
-                    <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">Опыт в коде</label>
-                    <select name="experience" class="w-full bg-mlDark border border-gray-800 focus:border-mlPurple rounded-xl px-4 py-3.5 text-sm text-gray-400 focus:outline-none transition-all">
-                        <option>Знаю базу Python (функции, циклы)</option>
-                        <option>Абсолютный новичок (хочу освоить)</option>
-                        <option>Уже работаю разработчиком / Data Analyst</option>
+                    <label id="lbl-type" class="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">Sizning faoliyat turingiz</label>
+                    <select name="activity_type" id="select-activity" class="w-full bg-black/40 border border-white/5 focus:border-mlPurple rounded-xl px-4 py-3.5 text-sm text-gray-500 focus:outline-none transition-all">
+                        <!-- Options filled dynamically by JS -->
                     </select>
                 </div>
                 
-                <button type="submit" class="w-full bg-gradient-to-r from-mlPurple to-indigo-600 hover:opacity-95 text-white font-bold py-4 rounded-xl text-sm transition shadow-lg shadow-mlPurple/10">
-                    Отправить заявку
+                <button type="submit" id="btn-submit" class="w-full bg-mlPurple hover:bg-opacity-90 text-white font-bold py-4 rounded-xl text-xs uppercase tracking-widest transition-all neon-glow-btn">
+                    Arizani tasdiqlash
                 </button>
             </form>
         </div>
     </section>
 
-    <!-- Футер -->
-    <footer class="border-t border-gray-950 bg-black py-12 text-center text-xs text-gray-600">
+    <!-- Footer -->
+    <footer class="border-t border-white/5 bg-black py-12 text-center text-xs text-gray-600">
         <div class="max-w-6xl mx-auto px-6 space-y-4">
-            <div class="flex justify-center space-x-8 text-xs font-semibold text-gray-400">
-                <a href="https://t.me/mlc_uz" target="_blank" class="hover:text-mlPurple transition">Telegram-Канал</a>
-                <a href="https://mlcommunity.uz" target="_blank" class="hover:text-mlCyan transition">MLCommunity.uz</a>
+            <div class="flex justify-center space-x-6 text-[11px] font-medium tracking-wide text-gray-500">
+                <a href="https://t.me/mlc_uz" target="_blank" class="hover:text-white transition">Telegram Kanal</a>
+                <a href="https://mlcommunity.uz" target="_blank" class="hover:text-white transition">Rasmiy Sayt</a>
                 <a href="mailto:info@mlcommunity.uz" class="hover:text-white transition">info@mlcommunity.uz</a>
             </div>
-            <p class="text-[11px]">&copy; 2026 ML Community Uzbekistan. Защищено стандартами качества 01AI.</p>
+            <p id="footer-text" class="text-[9px] tracking-wider text-gray-700">&copy; 2026 ML Community Uzbekistan. Barcha huquqlar himoyalangan.</p>
         </div>
     </footer>
 
+    <!-- Multi-Language System Processing Logic (CLEANED) -->
     <script>
-        const pInput = document.getElementById('phone_number');
-        pInput.addEventListener('input', function (e) {
-            let val = e.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,2})(\d{0,3})(\d{0,2})(\d{0,2})/);
-            if (!val[2] && val[1] !== '998') {
+        const translations = {
+            uz: {
+                navAbout: "Biz haqimizda", navAudience: "Kimlar uchun", navCurriculum: "Dastur marafon", navLeader: "Rahbariyat",
+                heroBadge: "GenAI Professional Trening Tizimi", heroDesc: "Kuniga 2 soat intensiv amaliyot tizimi orqali sun'iy intellekt vositalarida professional vizual, matnli va unikal video kontentlarni noldan mukammal darajagacha o'rganing.",
+                heroBtnMain: "Ishtirok etish", heroBtnSub: "O'quv dasturi",
+                m1: "Davomiyligi", m2: "Amaliyot va Nazariya", m3: "Sertifikatlash", m4: "Kunlik dars",
+                abBadge: "Platforma Maqsadi", abTitle: "ML Community Uzbekistan loyihasi", abDesc: "ML Community Uzbekistan — mamlakatimizdagi yetakchi sun'iy intellekt muhandislari va mutaxassislarini birlashtirgan guruhdir. Biz zamonaviy AI, Machine Learning va Generativ AI (GenAI) texnologiyalarini o'rganishni istagan yoshlar hamda tadbirkorlar uchun eng ilg'or xalqaro tizimlarni taqdim etamiz.",
+                f1Title: '"Tezkor g\'alaba" tamoyili', f1Desc: "Birinchi 7 kun ichida darhol vizual natija beruvchi generativ tizimlar bilan ishlab, ko'nikmalarni tez shakllantiramiz.",
+                f2Title: "Tizimli avtomatlashtirish", f2Desc: "Ikkinchi haftadan boshlab murakkab multimedia skriptlari, raqamli sun'iy avatarlar hamda biznes integratsiyalariga o'tamiz.",
+                audTitle: "Marafon kimlar uchun mo'ljallangan?", audDesc: "Sun'iy intellekt imkoniyatlaridan foydalangan holda o'z sohasida yetakchi bo'lmoqchi bo'lganlar uchun.",
+                aud1: '<h3 class="text-sm font-bold text-white uppercase tracking-wider flex items-center gap-2"><span class="w-1.5 h-1.5 bg-mlCyan rounded-full"></span> Marketpleys sotuvchilari</h3><ul class="text-xs text-gray-500 space-y-2 font-light"><li>• Mahsulotlar uchun professional rasmlar (Kun 2-3)</li><li>• Mahsulotlarning mukammal video sharhlari (Kun 5)</li><li>• Konversiyasi yuqori bo\'lgan tovar kartochkalari (Kun 4)</li><li>• Hamkorlar uchun Pitch Deck taqdimotlari (Kun 10)</li></ul>',
+                aud2: '<h3 class="text-sm font-bold text-white uppercase tracking-wider flex items-center gap-2"><span class="w-1.5 h-1.5 bg-mlPurple rounded-full"></span> Mikrobloggerlar</h3><ul class="text-xs text-gray-500 space-y-2 font-light"><li>• Raqamli so\'zlovchi avatarlar va UGC-kontent (Kun 11)</li><li>• Ijtimoiy tarmoqlar uchun virusli ko\'rinishdagi Reels (Kun 6)</li><li>• Shaxsiy rasmlarni professional tahrirlash (Kun 3)</li><li>• Kontent ostiga mualliflik huquqisiz unikal musiqa (Kun 9)</li></ul>',
+                aud3: '<h3 class="text-sm font-bold text-white uppercase tracking-wider flex items-center gap-2"><span class="w-1.5 h-1.5 bg-white rounded-full"></span> SMM-Mutaxassislar</h3><ul class="text-xs text-gray-500 space-y-2 font-light"><li>• Kontent-rejalashtirish va ssenariylar (Kun 1)</li><li>• Professional SMM hisobotlari (Kun 10)</li><li>• Kontent ishlab chiqarish jarayonini to\'liq avtomatlashtirish</li><li>• Rutin ish rejimlarini 5 martagacha tezlashtirish</li></ul>',
+                curTitle: "Marafon O'quv Rejasi", curSub: '<span class="text-mlPurple">Hafta 1: Vizual Muhandislik</span><span>|</span><span class="text-mlCyan">Hafta 2: Avtomatlashtirish & Biznes</span>',
+                
+                // Pure Verbatim 14-Day Text Nodes from GenAI_Marathon_Program.pdf for Block 1 & 2
+                block1HTML: '<div class="p-4 border border-mlPurple/30 bg-mlCard rounded-xl shadow-md"><h3 class="text-[11px] font-bold text-white uppercase tracking-wider">BLOK 1: Vizual Kontent va Tezkor Start (Kun 1-7)</h3></div>' +
+                            '<div class="p-5 rounded-xl border border-mlCardBorder bg-mlCard space-y-2 shadow-lg"><div class="flex justify-between items-center text-[10px] text-gray-500 font-bold uppercase tracking-wider"><span>KUN 1</span><span>Amaliyot</span></div><h4 class="text-sm font-bold text-white">Kirish va Prompt Muhandisligi madaniyati</h4><p class="text-[11px] text-gray-500 font-light">**Asboblar:** ChatGPT, Claude. Formula yordamida kontent-plan, Reels ssenariylari va mahsulot ta\'riflarini shakllantirish.</p></div>' +
+                            '<div class="p-5 rounded-xl border border-mlCardBorder bg-mlCard space-y-2 shadow-lg"><div class="flex justify-between items-center text-[10px] text-gray-500 font-bold uppercase tracking-wider"><span>KUN 2</span><span>Amaliyot</span></div><h4 class="text-sm font-bold text-white">Tasvirlar Sehrgarligi: Noldan avlod yaratish</h4><p class="text-[11px] text-gray-500 font-light">**Asboblar:** Midjourney, Flux, Ideogram. Text-to-Image avlodi, atmosfera fonlari va tovar kartochkalari uchun vizuallar tayyorlash.</p></div>' +
+                            '<div class="p-5 rounded-xl border border-mlCardBorder bg-mlCard space-y-2 shadow-lg"><div class="flex justify-between items-center text-[10px] text-gray-500 font-bold uppercase tracking-wider"><span>KUN 3</span><span>Amaliyot</span></div><h4 class="text-sm font-bold text-white">Fotomontaj va Mahsulotlarga ishlov berish</h4><p class="text-[11px] text-gray-500 font-light">**Asboblar:** Krea AI, Photoroom, Photoshop AI. Fonni o\'zgartirish (Inpainting), sifat darajasini oshirish (Upscale) va elementlarni almashtirish.</p></div>' +
+                            '<div class="p-5 rounded-xl border border-mlCardBorder bg-mlCard space-y-2 shadow-lg"><div class="flex justify-between items-center text-[10px] text-gray-500 font-bold uppercase tracking-wider"><span>KUN 4</span><span>Amaliyot</span></div><h4 class="text-sm font-bold text-white">Dizaynersiz SMM va Marketpleys infografikasi</h4><p class="text-[11px] text-gray-500 font-light">**Asboblar:** Canva + AI plaginlari, Microsoft Designer. Karusellar, matn turlari (tipografika) va sotuvchi tovar info-kartochkalarini dizayn qilish.</p></div>' +
+                            '<div class="p-5 rounded-xl border border-mlCardBorder bg-mlCard space-y-2 shadow-lg"><div class="flex justify-between items-center text-[10px] text-gray-500 font-bold uppercase tracking-wider"><span>KUN 5-6</span><span>Amaliyot</span></div><h4 class="text-sm font-bold text-white">Statikani harakatga keltirish va Reels montaji</h4><p class="text-[11px] text-gray-500 font-light">**Asboblar:** Luma, Runway (Gen-2/3), Kling, CapCut AI. Image-to-Video animatsiyalar, avtomatik subtitrlar va unikal Reels yig\'ish.</p></div>' +
+                            '<div class="p-5 rounded-xl border border-mlPurple/40 bg-mlCard space-y-2 shadow-lg"><div class="flex justify-between items-center text-[10px] text-mlPurple font-bold uppercase tracking-wider"><span>KUN 7</span><span>Sertifikatlash</span></div><h4 class="text-sm font-bold text-white">Demo-kun va "AI Content Creator: Basic"</h4><p class="text-[11px] text-gray-500 font-light">Birinchi haftalik ko\'nikmalar asosida yakuniy keys tahlil qilinadi va oraliq sertifikat topshiriladi.</p></div>',
+                
+                block2HTML: '<div class="p-4 border border-mlCyan/30 bg-mlCard rounded-xl shadow-md"><h3 class="text-[11px] font-bold text-white uppercase tracking-wider">BLOK 2: Multimedia, Biznes va Kelajak (Kun 8-14)</h3></div>' +
+                            '<div class="p-5 rounded-xl border border-mlCardBorder bg-mlCard space-y-2 shadow-lg"><div class="flex justify-between items-center text-[10px] text-gray-500 font-bold uppercase tracking-wider"><span>KUN 8</span><span>Amaliyot</span></div><h4 class="text-sm font-bold text-white">Video-Rejissura 2.0: Matndan video yaratish</h4><p class="text-[11px] text-gray-500 font-light">**Asboblar:** Sora, Kling, Minimax. Text-to-Video avlodi, personaj barqarorligini saqlash va 30 soniyalik syujetli reklama roliklari.</p></div>' +
+                            '<div class="p-5 rounded-xl border border-mlCardBorder bg-mlCard space-y-2 shadow-lg"><div class="flex justify-between items-center text-[10px] text-gray-500 font-bold uppercase tracking-wider"><span>KUN 9</span><span>Amaliyot</span></div><h4 class="text-sm font-bold text-white">Ovoz va Musiqa: Audio Brending muhandisligi</h4><p class="text-[11px] text-gray-500 font-light">**Asboblar:** Suno, Udio, ElevenLabs. Ovoz klonlash, mualliflik huquqisiz musiqiy trekler va chet tillarida ovozlashtirish tizimi.</p></div>' +
+                            '<div class="p-5 rounded-xl border border-mlCardBorder bg-mlCard space-y-2 shadow-lg"><div class="flex justify-between items-center text-[10px] text-gray-500 font-bold uppercase tracking-wider"><span>KUN 10</span><span>Amaliyot</span></div><h4 class="text-sm font-bold text-white">Taqdimotlar va Biznes hujjatlarni boshqarish</h4><p class="text-[11px] text-gray-500 font-light">**Asboblar:** Gamma, Beautiful.ai. SMM hisobotlari va Pitch Deck taqdimotlarini professional rejimda soniyalar ichida tayyorlash.</p></div>' +
+                            '<div class="p-5 rounded-xl border border-mlCardBorder bg-mlCard space-y-2 shadow-lg"><div class="flex justify-between items-center text-[10px] text-gray-500 font-bold uppercase tracking-wider"><span>KUN 11</span><span>Amaliyot</span></div><h4 class="text-sm font-bold text-white">Raqamli Avatarlar va UGC-kontent madaniyati</h4><p class="text-[11px] text-gray-500 font-light">**Asboblar:** HeyGen, D-ID, Hedra. Rasmlardan gapiruvchi raqamli avatar-boshlovchi hamda FAQ formatidagi sun\'iy videolar yaratish.</p></div>' +
+                            '<div class="p-5 rounded-xl border border-mlCardBorder bg-mlCard space-y-2 shadow-lg"><div class="flex justify-between items-center text-[10px] text-gray-500 font-bold uppercase tracking-wider"><span>KUN 12-13</span><span>Teoriya & Strategiya</span></div><h4 class="text-sm font-bold text-white">Neyrotarmoq etika, qonunlari va Kelajak trendlari</h4><p class="text-[11px] text-gray-500 font-light">Turingdan Transformerlargacha bo\'lgan tarix. Mualliflik huquqlari va frilans bozorida unikal xizmatlarni monetizatsiya qilish darsi.</p></div>' +
+                            '<div class="p-5 rounded-xl border border-mlCyan/40 bg-mlCard space-y-2 shadow-lg"><div class="flex justify-between items-center text-[10px] text-mlCyan font-bold uppercase tracking-wider"><span>KUN 14</span><span>Grand Final</span></div><h4 class="text-sm font-bold text-white">Diplom himoyasi va "Certified GenAI Professional"</h4><p class="text-[11px] text-gray-500 font-light">To\'liq shaxsiy portfolio loyihasi himoya qilinadi va xalqaro professional diplom topshirilishi.</p></div>',
+                
+                lBadge: "Bosh Rahbar", lTitle: "ML Community Uzbekistan Bosh Rahbari & Bosh AI Muhandisi", lDesc: "O'zbekistondagi eng yirik sun'iy intellekt ekotizimi va professional ML Community Uzbekistan guruhining asoschisi hamda rasmiy rahbari. Sanoat miqyosidagi yirik Machine Learning loyihalari me'mori va mamlakatda xalqaro ta'lim tizimlarini joriy etish tashabbuskori. Har bir marafon ishtirokchisining o'quv sifatini shaxsan nazorat qiladi.",
+                fTitle: "Marafonga Arizalar Qabuli", fDesc: "Koordinatorlarimiz guruh suhbatini belgilash uchun tez orada siz bilan Telegram orqali bog'lanishadi.",
+                lbl1: "To'liq ism-sharifingiz", lbl2: "Telegram profilingiz (@username)", lbl3: "Telefon raqamingiz", lbl4: "Sizning faoliyat turingiz", btn: "Arizani tasdiqlash",
+                opts: '<option>SMM Mutaxassisiman</option><option>Marketpleysda sotuvchiman</option><option>Mikroblogger / Kontent kreyterman</option>',
+                foot: "&copy; 2026 ML Community Uzbekistan. Barcha huquqlar himoyalangan."
+            },
+            ru: {
+                navAbout: "О нас", navAudience: "Для кого", navCurriculum: "Программа марафона", navLeader: "Руководство",
+                heroBadge: "Профессиональная система обучения GenAI", heroDesc: "Освойте профессиональный визуальный, текстовый и видеоконтент с нуля с помощью инструментов искусственного интеллекта всего за 2 часа интенсивной практики в день.",
+                heroBtnMain: "Принять участие", heroBtnSub: "Программа обучения",
+                m1: "Длительность", m2: "Практика и Теория", m3: "Сертификация", m4: "Урок в день",
+                abBadge: "Цель Платформы", abTitle: "Проект ML Community Uzbekistan", abDesc: "ML Community Uzbekistan — это ведущая группа, объединяющая инженеров и специалистов в области искусственного интеллекта в нашей стране. Мы предлагаем передовые международные системы для молодежи и предпринимателей, желающих изучать современные технологии AI, Machine Learning и Generativ AI (GenAI).",
+                f1Title: 'Принцип "Быстрых побед"', f1Desc: "В первые 7 дней мы работаем с генеративными системами, дающими мгновенный визуальный результат для быстрого формирования навыков.",
+                f2Title: "Системная автоматизация", f2Desc: "Со второй недели мы переходим к сложным мультимедийным скриптам, цифровым аватарам и глубокой бизнес-интеграции.",
+                audTitle: "Для кого предназначен марафон?", audDesc: "Для тех, кто хочет ускорить работу и выйти на высокий доход с помощью возможностей искусственного интеллекта.",
+                aud1: '<h3 class="text-sm font-bold text-white uppercase tracking-wider flex items-center gap-2"><span class="w-1.5 h-1.5 bg-mlCyan rounded-full"></span> Продавцы маркетплейсов</h3><ul class="text-xs text-gray-500 space-y-2 font-light"><li>• Профессиональные фото товаров (Дни 2-3)</li><li>• Качественные видеообзоры товаров (День 5)</li><li>• Карточки товаров с высокой конверсией (День 4)</li><li>• Презентации Pitch Deck для партнеров (День 10)</li></ul>',
+                aud2: '<h3 class="text-sm font-bold text-white uppercase tracking-wider flex items-center gap-2"><span class="w-1.5 h-1.5 bg-mlPurple rounded-full"></span> Микроблогеры</h3><ul class="text-xs text-gray-500 space-y-2 font-light"><li>• Цифровые аватары и UGC-контент (День 11)</li><li>• Вирусные ролики Reels для соцсетей (День 6)</li><li>• Профессиональная обработка личных фото (День 3)</li><li>• Уникальная музыка без авторских прав (День 9)</li></ul>',
+                aud3: '<h3 class="text-sm font-bold text-white uppercase tracking-wider flex items-center gap-2"><span class="w-1.5 h-1.5 bg-white rounded-full"></span> SMM-Специалисты</h3><ul class="text-xs text-gray-500 space-y-2 font-light"><li>• Контент-планирование и идеальные сценарии (День 1)</li><li>• Профессиональные SMM-отчеты (День 10)</li><li>• Полная автоматизация производства контента</li><li>• Ускорение рутинных задач до 5 раз</li></ul>',
+                curTitle: "Учебный План Марафона", curSub: '<span class="text-mlPurple">Неделя 1: Визуальная инженерия</span><span>|</span><span class="text-mlCyan">Неделя 2: Автоматизация и Бизнес</span>',
+                
+                block1HTML: '<div class="p-4 border border-mlPurple/30 bg-mlCard rounded-xl shadow-md"><h3 class="text-[11px] font-bold text-white uppercase tracking-wider">БЛОК 1: Визуальный контент и быстрый старт (Дни 1-7)</h3></div>' +
+                            '<div class="p-5 rounded-xl border border-mlCardBorder bg-mlCard space-y-2 shadow-lg"><div class="flex justify-between items-center text-[10px] text-gray-500 font-bold uppercase tracking-wider"><span>ДЕНЬ 1</span><span>Практика</span></div><h4 class="text-sm font-bold text-white">Введение и Искусство Промптинга</h4><p class="text-[11px] text-gray-500 font-light">**Инструменты:** ChatGPT, Claude. Формула промпта, генерация контент-плана и сценариев для Reels.</p></div>' +
+                            '<div class="p-5 rounded-xl border border-mlCardBorder bg-mlCard space-y-2 shadow-lg"><div class="flex justify-between items-center text-[10px] text-gray-500 font-bold uppercase tracking-wider"><span>ДЕНЬ 2</span><span>Практика</span></div><h4 class="text-sm font-bold text-white">Магия Изображений: Генерация с нуля</h4><p class="text-[11px] text-gray-500 font-light">**Инструменты:** Midjourney, Flux, Ideogram. Создание атмосферных фонов для товаров и обложек для постов.</p></div>' +
+                            '<div class="p-5 rounded-xl border border-mlCardBorder bg-mlCard space-y-2 shadow-lg"><div class="flex justify-between items-center text-[10px] text-gray-500 font-bold uppercase tracking-wider"><span>ДЕНЬ 3</span><span>Практика</span></div><h4 class="text-sm font-bold text-white">Фотомонтаж и Обработка товаров</h4><p class="text-[11px] text-gray-500 font-light">**Инструменты:** Krea AI, Photoroom, Photoshop AI. Замена фона (Inpainting), улучшение качества (Upscale).</p></div>' +
+                            '<div class="p-5 rounded-xl border border-mlCardBorder bg-mlCard space-y-2 shadow-lg"><div class="flex justify-between items-center text-[10px] text-gray-500 font-bold uppercase tracking-wider"><span>ДЕНЬ 4</span><span>Практика</span></div><h4 class="text-sm font-bold text-white">Дизайн для соцсетей без дизайнера</h4><p class="text-[11px] text-gray-500 font-light">**Инструменты:** Canva + AI плагины, Microsoft Designer. Карточки для маркетплейсов и инфографика.</p></div>' +
+                            '<div class="p-5 rounded-xl border border-mlCardBorder bg-mlCard space-y-2 shadow-lg"><div class="flex justify-between items-center text-[10px] text-gray-500 font-bold uppercase tracking-wider"><span>ДЕНЬ 5-6</span><span>Практика</span></div><h4 class="text-sm font-bold text-white">Оживление фото и Сборка вирусного ролика</h4><p class="text-[11px] text-gray-500 font-light">**Инструменты:** Luma, Runway, Kling, CapCut AI. Анимация товаров и автоматические субтитры.</p></div>' +
+                            '<div class="p-5 rounded-xl border border-mlPurple/40 bg-mlCard space-y-2 shadow-lg"><div class="flex justify-between items-center text-[10px] text-mlPurple font-bold uppercase tracking-wider"><span>ДЕНЬ 7</span><span>Сертификация</span></div><h4 class="text-sm font-bold text-white">ЭКВАТОР: Защита проектов первой недели</h4><p class="text-[11px] text-gray-500 font-light">Разбор работ куратором и вручение промежуточного сертификата "AI Content Creator: Basic".</p></div>',
+                
+                block2HTML: '<div class="p-4 border border-mlCyan/30 bg-mlCard rounded-xl shadow-md"><h3 class="text-[11px] font-bold text-white uppercase tracking-wider">БЛОК 2: Мультимедиа, бизнес-задачи и будущее (Дни 8-14)</h3></div>' +
+                            '<div class="p-5 rounded-xl border border-mlCardBorder bg-mlCard space-y-2 shadow-lg"><div class="flex justify-between items-center text-[10px] text-gray-500 font-bold uppercase tracking-wider"><span>ДЕНЬ 8</span><span>Практика</span></div><h4 class="text-sm font-bold text-white">Генерация Видео 2.0: Режиссура с ИИ</h4><p class="text-[11px] text-gray-500 font-light">**Инструменты:** Sora, Kling, Minimax. Text-to-Video: создание рекламных роликов с сюжетом.</p></div>' +
+                            '<div class="p-5 rounded-xl border border-mlCardBorder bg-mlCard space-y-2 shadow-lg"><div class="flex justify-between items-center text-[10px] text-gray-500 font-bold uppercase tracking-wider"><span>ДЕНЬ 9</span><span>Практика</span></div><h4 class="text-sm font-bold text-white">Звук и Музыка: Аудио-брендинг</h4><p class="text-[11px] text-gray-500 font-light">**Инструменты:** Suno, Udio, ElevenLabs. Генерация фоновой музыки и клонирование голоса.</p></div>' +
+                            '<div class="p-5 rounded-xl border border-mlCardBorder bg-mlCard space-y-2 shadow-lg"><div class="flex justify-between items-center text-[10px] text-gray-500 font-bold uppercase tracking-wider"><span>ДЕНЬ 10</span><span>Практика</span></div><h4 class="text-sm font-bold text-white">Презентации и Документы за секунды</h4><p class="text-[11px] text-gray-500 font-light">**Инструменты:** Gamma, Beautiful.ai. Создание Pitch Deck и SMM-отчетов для бизнеса.</p></div>' +
+                            '<div class="p-5 rounded-xl border border-mlCardBorder bg-mlCard space-y-2 shadow-lg"><div class="flex justify-between items-center text-[10px] text-gray-500 font-bold uppercase tracking-wider"><span>ДЕНЬ 11</span><span>Практика</span></div><h4 class="text-sm font-bold text-white">Цифровые Аватары и UGC-контент</h4><p class="text-[11px] text-gray-500 font-light">**Инструменты:** HeyGen, D-ID, Hedra. Лицо бренда без участия человека, создание FAQ-видео.</p></div>' +
+                            '<div class="p-5 rounded-xl border border-mlCardBorder bg-mlCard space-y-2 shadow-lg"><div class="flex justify-between items-center text-[10px] text-gray-500 font-bold uppercase tracking-wider"><span>ДЕНЬ 12-13</span><span>Теория и Тренды</span></div><h4 class="text-sm font-bold text-white">Нейросети изнутри и Монетизация навыков</h4><p class="text-[11px] text-gray-500 font-light">Как работают сети, авторские права и построение личного бренда фрилансера.</p></div>' +
+                            '<div class="p-5 rounded-xl border border-mlCyan/40 bg-mlCard space-y-2 shadow-lg"><div class="flex justify-between items-center text-[10px] text-mlCyan font-bold uppercase tracking-wider"><span>ДЕНЬ 14</span><span>Финал</span></div><h4 class="text-sm font-bold text-white">ФИНАЛ: Большой дипломный проект</h4><p class="text-[11px] text-gray-400 font-light">Комплексная защита портфолио перед группой и диплом "Certified GenAI Professional".</p></div>',
+                
+                lBadge: "Главный Руководитель", lTitle: "Глава ML Community Uzbekistan & Главный AI Инженер", lDesc: "Основатель и официальный руководитель крупнейшей экосистемы искусственного интеллекта и профессиональной группы ML Community Uzbekistan. Архитектор масштабных проектов Machine Learning и инициатор внедрения международных систем обучения в стране. Лично контролирует качество обучения каждого участника марафона.",
+                fTitle: "Прием Заявок на Марафон", fDesc: "Наши координаторы свяжутся с вами в Telegram в ближайшее время для назначения собеседования.",
+                lbl1: "Ваше полное имя (ФИО)", lbl2: "Ваш профиль в Telegram (@username)", lbl3: "Номер телефона", lbl4: "Ваш вид деятельности", btn: "Подтвердить заявку",
+                opts: '<option>Я SMM-специалист</option><option>Я продавец на маркетплейсе</option><option>Я микроблогер / создатель контента</option>',
+                foot: "&copy; 2026 ML Community Uzbekistan. Все права защищены."
+            },
+            en: {
+                navAbout: "About Us", navAudience: "Audience", navCurriculum: "Syllabus Marathon", navLeader: "Leadership",
+                heroBadge: "GenAI Professional Training System", heroDesc: "Master professional visual, text, and unique video content from scratch using artificial intelligence tools with just 2 hours of intensive practice per day.",
+                heroBtnMain: "Join Marathon", heroBtnSub: "View Syllabus",
+                m1: "Duration", m2: "Practice & Theory", m3: "Certification", m4: "Daily Lesson",
+                abBadge: "Platform Mission", abTitle: "ML Community Uzbekistan Project", abDesc: "ML Community Uzbekistan is the leading group uniting artificial intelligence engineers and professionals in our country. We provide advanced international frameworks for youth and entrepreneurs looking to learn modern AI, Machine Learning, and Generative AI (GenAI) technologies.",
+                f1Title: '"Quick Wins" Principle', f1Desc: "In the first 7 days, we work directly with generative tools that give instant visual results to build skills rapidly.",
+                f2Title: "System Automation", f2Desc: "From the second week, we move into complex multimedia scripting, digital speaking avatars, and deep business integrations.",
+                audTitle: "Who is this Marathon for?", audDesc: "For those who want to accelerate work rhythms and achieve high income using artificial intelligence capabilities.",
+                aud1: '<h3 class="text-sm font-bold text-white uppercase tracking-wider flex items-center gap-2"><span class="w-1.5 h-1.5 bg-mlCyan rounded-full"></span> Marketplace Sellers</h3><ul class="text-xs text-gray-500 space-y-2 font-light"><li>• Professional product photos (Days 2-3)</li><li>• Premium video product reviews (Day 5)</li><li>• High-conversion product cards (Day 4)</li><li>• Pitch Deck presentations for partners (Day 10)</li></ul>',
+                aud2: '<h3 class="text-sm font-bold text-white uppercase tracking-wider flex items-center gap-2"><span class="w-1.5 h-1.5 bg-mlPurple rounded-full"></span> Microbloggers</h3><ul class="text-xs text-gray-500 space-y-2 font-light"><li>• Digital speaking avatars & UGC content (Day 11)</li><li>• Viral video structures for Reels (Day 6)</li><li>• Professional personal photo editing (Day 3)</li><li>• Unique copyright-free music tracking (Day 9)</li></ul>',
+                aud3: '<h3 class="text-sm font-bold text-white uppercase tracking-wider flex items-center gap-2"><span class="w-1.5 h-1.5 bg-white rounded-full"></span> SMM Specialists</h3><ul class="text-xs text-gray-500 space-y-2 font-light"><li>• Content planning & ideal scripts (Day 1)</li><li>• Professional SMM reporting layouts (Day 10)</li><li>• Full-cycle content production automation</li><li>• Accelerating routine workloads up to 5 times</li></ul>',
+                curTitle: "Marathon Training Syllabus", curSub: '<span class="text-mlPurple">Week 1: Visual Engineering</span><span>|</span><span class="text-mlCyan">Week 2: Automation & Business</span>',
+                
+                block1HTML: '<div class="p-4 border border-mlPurple/30 bg-mlCard rounded-xl shadow-md"><h3 class="text-[11px] font-bold text-white uppercase tracking-wider">BLOCK 1: Visual Content & Fast Start (Days 1-7)</h3></div>' +
+                            '<div class="p-5 rounded-xl border border-mlCardBorder bg-mlCard space-y-2 shadow-lg"><div class="flex justify-between items-center text-[10px] text-gray-500 font-bold uppercase tracking-wider"><span>DAY 1</span><span>Practice</span></div><h4 class="text-sm font-bold text-white">Introduction & Art of Prompting</h4><p class="text-[11px] text-gray-500 font-light">**Tools:** ChatGPT, Claude. Learning formulas, generating content plans, and scriptwriting structures.</p></div>' +
+                            '<div class="p-5 rounded-xl border border-mlCardBorder bg-mlCard space-y-2 shadow-lg"><div class="flex justify-between items-center text-[10px] text-gray-500 font-bold uppercase tracking-wider"><span>DAY 2</span><span>Practice</span></div><h4 class="text-sm font-bold text-white">Image Magic: Generating from scratch</h4><p class="text-[11px] text-gray-500 font-light">**Tools:** Midjourney, Flux, Ideogram. Background creation and stylizations.</p></div>' +
+                            '<div class="p-5 rounded-xl border border-mlCardBorder bg-mlCard space-y-2 shadow-lg"><div class="flex justify-between items-center text-[10px] text-gray-500 font-bold uppercase tracking-wider"><span>DAY 3</span><span>Practice</span></div><h4 class="text-sm font-bold text-white">Photo Editing & Product Design</h4><p class="text-[11px] text-gray-500 font-light">**Tools:** Krea AI, Photoroom, Photoshop AI. Inpainting methods and Upscale tools.</p></div>' +
+                            '<div class="p-5 rounded-xl border border-mlCardBorder bg-mlCard space-y-2 shadow-lg"><div class="flex justify-between items-center text-[10px] text-gray-500 font-bold uppercase tracking-wider"><span>DAY 4</span><span>Practice</span></div><h4 class="text-sm font-bold text-white">Social Media Design Without Designers</h4><p class="text-[11px] text-gray-500 font-light">**Tools:** Canva + AI plug-ins, Microsoft Designer. Marketplace formatting layouts.</p></div>' +
+                            '<div class="p-5 rounded-xl border border-mlCardBorder bg-mlCard space-y-2 shadow-lg"><div class="flex justify-between items-center text-[10px] text-gray-500 font-bold uppercase tracking-wider"><span>DAY 5-6</span><span>Practice</span></div><h4 class="text-sm font-bold text-white">Animating Photos & Viral Reels Assembly</h4><p class="text-[11px] text-gray-500 font-light">**Tools:** Luma, Runway, Kling, CapCut AI. Image-to-Video architectures and auto-captions.</p></div>' +
+                            '<div class="p-5 rounded-xl border border-mlPurple/40 bg-mlCard space-y-2 shadow-lg"><div class="flex justify-between items-center text-[10px] text-mlPurple font-bold uppercase tracking-wider"><span>DAY 7</span><span>Certification</span></div><h4 class="text-sm font-bold text-white">MIDPOINT: Project Presentations</h4><p class="text-[11px] text-gray-500 font-light">First week evaluation and intermediate certificate "AI Content Creator: Basic".</p></div>',
+                
+                block2HTML: '<div class="p-4 border border-mlCyan/30 bg-mlCard rounded-xl shadow-md"><h3 class="text-[11px] font-bold text-white uppercase tracking-wider">BLOCK 2: Multimedia, Business & Future (Days 8-14)</h3></div>' +
+                            '<div class="p-5 rounded-xl border border-mlCardBorder bg-mlCard space-y-2 shadow-lg"><div class="flex justify-between items-center text-[10px] text-gray-500 font-bold uppercase tracking-wider"><span>DAY 8</span><span>Practice</span></div><h4 class="text-sm font-bold text-white">Video Generation 2.0: AI Directing</h4><p class="text-[11px] text-gray-500 font-light">**Tools:** Sora, Kling, Minimax. Complex short film scripting developments.</p></div>' +
+                            '<div class="p-5 rounded-xl border border-mlCardBorder bg-mlCard space-y-2 shadow-lg"><div class="flex justify-between items-center text-[10px] text-gray-500 font-bold uppercase tracking-wider"><span>DAY 9</span><span>Practice</span></div><h4 class="text-sm font-bold text-white">Sound and Music: Audio Branding</h4><p class="text-[11px] text-gray-500 font-light">**Tools:** Suno, Udio, ElevenLabs. Voice cloning structures and sound engineering.</p></div>' +
+                            '<div class="p-5 rounded-xl border border-mlCardBorder bg-mlCard space-y-2 shadow-lg"><div class="flex justify-between items-center text-[10px] text-gray-500 font-bold uppercase tracking-wider"><span>DAY 10</span><span>Practice</span></div><h4 class="text-sm font-bold text-white">Presentations & Documents in Seconds</h4><p class="text-[11px] text-gray-500 font-light">**Tools:** Gamma, Beautiful.ai. Automating Pitch Decks and data visualization panels.</p></div>' +
+                            '<div class="p-5 rounded-xl border border-mlCardBorder bg-mlCard space-y-2 shadow-lg"><div class="flex justify-between items-center text-[10px] text-gray-500 font-bold uppercase tracking-wider"><span>DAY 11</span><span>Practice</span></div><h4 class="text-sm font-bold text-white">Digital Avatars & UGC Systems</h4><p class="text-[11px] text-gray-500 font-light">**Tools:** HeyGen, D-ID, Hedra. Creating camera-less brand hosts and FAQ frameworks.</p></div>' +
+                            '<div class="p-5 rounded-xl border border-mlCardBorder bg-mlCard space-y-2 shadow-lg"><div class="flex justify-between items-center text-[10px] text-gray-500 font-bold uppercase tracking-wider"><span>DAY 12-13</span><span>Theory & Trends</span></div><h4 class="text-sm font-bold text-white">Under the Hood: Deep Tech Ethics & Monetization</h4><p class="text-[11px] text-gray-500 font-light">Neural net history, copyright structures, and selling AI workflows to global clients.</p></div>' +
+                            '<div class="p-5 rounded-xl border border-mlCyan/40 bg-mlCard space-y-2 shadow-lg"><div class="flex justify-between items-center text-[10px] text-mlCyan font-bold uppercase tracking-wider"><span>DAY 14</span><span>Graduation</span></div><h4 class="text-sm font-bold text-white">GRAND FINAL: Portfolio Defence</h4><p class="text-[11px] text-gray-400 font-light">Complete portfolio assembly and international diploma "Certified GenAI Professional".</p></div>',
+                
+                lBadge: "General Leader", lTitle: "Head of ML Community Uzbekistan & Chief AI Engineer", lDesc: "Founder and official head of the largest artificial intelligence ecosystem and professional group ML Community Uzbekistan. Architect of large-scale Machine Learning projects and initiator of international training systems integration in the country. Personally monitors the educational quality of each marathon participant.",
+                fTitle: "Marathon Application Processing", fDesc: "Our coordinators will contact you via Telegram shortly to arrange an online validation interview.",
+                lbl1: "Your Full Name", lbl2: "Telegram Profile (@username)", lbl3: "Phone Number", lbl4: "Your Field of Activity", btn: "Confirm Application",
+                opts: '<option>SMM Specialist</option><option>E-commerce / Marketplace Seller</option><option>Microblogger / Content Creator</option>',
+                foot: "&copy; 2026 ML Community Uzbekistan. All rights reserved."
+            }
+        };
+
+        function changeLanguage(lang) {
+            ['uz', 'ru', 'en'].forEach(l => {
+                const btn = document.getElementById('lang-' + l);
+                if (l === lang) {
+                    btn.classList.add('bg-mlPurple', 'text-white');
+                    btn.classList.remove('text-gray-400');
+                } else {
+                    btn.classList.remove('bg-mlPurple', 'text-white');
+                    btn.classList.add('text-gray-400');
+                }
+            });
+
+            const data = translations[lang];
+            document.getElementById('nav-about').innerText = data.navAbout;
+            document.getElementById('nav-audience').innerText = data.navAudience;
+            document.getElementById('nav-curriculum').innerText = data.navCurriculum;
+            document.getElementById('nav-leader').innerText = data.navLeader;
+            document.getElementById('hero-badge').querySelector('span:last-child').innerText = data.heroBadge;
+            document.getElementById('hero-desc').innerText = data.heroDesc;
+            document.getElementById('hero-btn-main').innerText = data.heroBtnMain;
+            document.getElementById('hero-btn-sub').innerText = data.heroBtnSub;
+            document.getElementById('metric-duration').innerText = data.m1;
+            document.getElementById('metric-ratio').innerText = data.m2;
+            document.getElementById('metric-certs').innerText = data.m3;
+            document.getElementById('metric-hours').innerText = data.m4;
+            document.getElementById('about-badge').innerText = data.abBadge;
+            document.getElementById('about-title').innerText = data.abTitle;
+            document.getElementById('about-desc').innerText = data.abDesc;
+            document.getElementById('feature-1-title').innerText = data.f1Title;
+            document.getElementById('feature-1-desc').innerText = data.f1Desc;
+            document.getElementById('feature-2-title').innerText = data.f2Title;
+            document.getElementById('feature-2-desc').innerText = data.f2Desc;
+            document.getElementById('aud-title').innerText = data.audTitle;
+            document.getElementById('aud-desc').innerText = data.audDesc;
+            document.getElementById('card-aud-1').innerHTML = data.aud1;
+            document.getElementById('card-aud-2').innerHTML = data.aud2;
+            document.getElementById('card-aud-3').innerHTML = data.aud3;
+            document.getElementById('cur-title').innerText = data.curTitle;
+            document.getElementById('cur-sub').innerHTML = data.curSub;
+            document.getElementById('syllabus-block-1').innerHTML = data.block1HTML;
+            document.getElementById('syllabus-block-2').innerHTML = data.block2HTML;
+            document.getElementById('lead-badge').innerText = data.lBadge;
+            document.getElementById('lead-title').innerText = data.lTitle;
+            document.getElementById('lead-desc').innerText = data.lDesc;
+            document.getElementById('form-title').innerText = data.fTitle;
+            document.getElementById('form-desc').innerText = data.fDesc;
+            document.getElementById('lbl-name').innerText = data.lbl1;
+            document.getElementById('lbl-tg').innerText = data.lbl2;
+            document.getElementById('lbl-phone').innerText = data.lbl3;
+            document.getElementById('lbl-type').innerText = data.lbl4;
+            document.getElementById('select-activity').innerHTML = data.opts;
+            document.getElementById('btn-submit').innerText = data.btn;
+            document.getElementById('footer-text').innerHTML = data.foot;
+        }
+
+        window.onload = function() {
+            changeLanguage('uz');
+        };
+
+        const phone = document.getElementById('uzb_phone');
+        phone.addEventListener('input', function (e) {
+            let m = e.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,2})(\d{0,3})(\d{0,2})(\d{0,2})/);
+            if (!m[2] && m[1] !== '998') {
                 e.target.value = '+998 (';
                 return;
             }
-            e.target.value = !val[2] ? '+998 (' + val[1] : '+998 (' + val[2] + (val[3] ? ') ' + val[3] : '') + (val[4] ? '-' + val[4] : '') + (val[5] ? '-' + val[5] : '');
+            e.target.value = !m[2] ? '+998 (' + m[1] : '+998 (' + m[2] + (m[3] ? ') ' + m[3] : '') + (m[4] ? '-' + m[4] : '') + (m[5] ? '-' + m[5] : '');
         });
     </script>
 </body>
